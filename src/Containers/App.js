@@ -3,6 +3,7 @@ import CardList from "../Components/CardList";
 import SearchBox from "../Components/SearchBox";
 import ErrorBoundry from "../Components/Error.Boundry";
 import Scroll from "../Components/Scroll";
+import axios from "axios";
 import "./App.css";
 
 class App extends Component {
@@ -15,11 +16,11 @@ class App extends Component {
     }
 
     componentDidMount() {
-        const url = "https://jsonplaceholder.typicode.com/users";
-        const proxyUrl = "https://cors-anywhere.herokuapp.com/";
-        fetch(proxyUrl + url)
-            .then((response) => response.json())
-            .then((users) => this.setState({ robots: users }));
+        axios
+            .get("https://jsonplaceholder.typicode.com/users")
+            .then((response) => {
+                this.setState({ robots: response.data });
+            });
     }
 
     onSearchChange = (event) => {
